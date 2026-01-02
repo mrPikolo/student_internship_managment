@@ -30,4 +30,62 @@ public class CV {
 	private String interests;
 	
 	private String imagePath;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Student getStudent() {
+		return student;
+	}
+
+	public void setStudent(Student student) {
+		this.student = student;
+	}
+
+	public String getEducation() {
+		return education;
+	}
+
+	public void setEducation(String education) {
+		this.education = education;
+	}
+
+	public String getExperience() {
+		return experience;
+	}
+
+	public void setExperience(String experience) {
+		this.experience = experience;
+	}
+
+	public String getSkills() {
+		return skills;
+	}
+
+	public void setSkills(String skills) {
+		this.skills = skills;
+	}
+
+	public String getInterests() {
+		return interests;
+	}
+
+	public void setInterests(String interests) {
+		this.interests = interests;
+	}
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+	
+	
 }

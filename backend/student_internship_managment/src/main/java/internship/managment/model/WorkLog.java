@@ -25,4 +25,46 @@ public class WorkLog {
 	
 	@Lob
 	private String description;
+
+	public Long getId() {
+		return Id;
+	}
+
+	public void setId(Long id) {
+		Id = id;
+	}
+
+	public Student getStudent() {
+		return student;
+	}
+
+	public void setStudent(Student student) {
+		this.student = student;
+	}
+
+	public Internship getInternship() {
+		return internship;
+	}
+
+	public void setInternship(Internship internship) {
+		this.internship = internship;
+	}
+
+	public int getWeekNumber() {
+		return weekNumber;
+	}
+
+	public void setWeekNumber(int weekNumber) {
+		this.weekNumber = weekNumber;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	
 }

@@ -21,4 +21,36 @@ public class Evaluation {
 	
 	private int grade;
 	private String comment;
+	public Long getId() {
+		return Id;
+	}
+	public void setId(Long id) {
+		Id = id;
+	}
+	public Student getStudent() {
+		return student;
+	}
+	public void setStudent(Student student) {
+		this.student = student;
+	}
+	public Internship getInternship() {
+		return internship;
+	}
+	public void setInternship(Internship internship) {
+		this.internship = internship;
+	}
+	public int getGrade() {
+		return grade;
+	}
+	public void setGrade(int grade) {
+		this.grade = grade;
+	}
+	public String getComment() {
+		return comment;
+	}
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+	
+	
 }
