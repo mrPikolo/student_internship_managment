@@ -28,6 +28,7 @@ public class Internship {
 	private String technologies;
 	private LocalDate startDate;
 	private LocalDate endDate;
+	
 	public Long getId() {
 		return id;
 	}
