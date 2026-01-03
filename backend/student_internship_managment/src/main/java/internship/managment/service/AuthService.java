@@ -17,7 +17,7 @@ public class AuthService {
 
 	public User authenticate(String username, String password) {
 		
-		Optional<User> userOpt = userRepository.findByUsername(username);
+		Optional<User> userOpt = userRepository.findByUsernameAndActiveTrue(username);
 
 		/*
 		 * if (userOpt.isEmpty()) { throw new RuntimeException("Korisnik ne postoji"); }
