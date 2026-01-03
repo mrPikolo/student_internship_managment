@@ -53,7 +53,7 @@ public class StudentService {
 
 	public List<StudentDTO> getAll() {
 		
-		List<Student> all = studentRepository.findAll();
+		List<Student> all = studentRepository.findAllActive();
 		
 		List<StudentDTO> allDTO = new ArrayList<>();
 		for(Student s: all) {
@@ -83,6 +83,17 @@ public class StudentService {
 			studentDTO = mapper.toDTO(s);
 		}
 		return studentDTO;
+	}
+
+	
+	public void softDeleteStudent(Long id) {
+		
+		Optional<Student> studentOpt = studentRepository.findById(id);
+		if(studentOpt.isPresent()) {
+			Student s = studentOpt.get();
+			s.getUser().setActive(false);
+			studentRepository.save(s);
+		}
 	}
 
 }
