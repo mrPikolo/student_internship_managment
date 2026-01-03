@@ -17,6 +17,7 @@ public class StudentMapper {
         dto.setIndexNumber(student.getIndexNumber());
         dto.setBirthDate(student.getBirthDate());
         dto.setUsername(student.getUser().getUsername());
+        dto.setActive(student.getUser().isActive());
         return dto;
     }
 }

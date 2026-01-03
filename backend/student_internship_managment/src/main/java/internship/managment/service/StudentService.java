@@ -1,5 +1,8 @@
 package internship.managment.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,6 +48,19 @@ public class StudentService {
 		Student saved = studentRepository.save(student);
 		
 		return mapper.toDTO(saved);
+	}
+
+	public List<StudentDTO> getAll() {
+		
+		List<Student> all = studentRepository.findAll();
+		
+		List<StudentDTO> allDTO = new ArrayList<>();
+		for(Student s: all) {
+			StudentDTO sDTO = mapper.toDTO(s);
+			allDTO.add(sDTO);
+		}
+		
+		return allDTO;
 	}
 
 }

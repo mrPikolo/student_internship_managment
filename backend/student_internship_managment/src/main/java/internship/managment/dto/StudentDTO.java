@@ -12,13 +12,14 @@ public class StudentDTO {
 	private String indexNumber;
 	
 	private String username;
+	private boolean active;
 
 	public StudentDTO() {
 		super();
 	}
 
 	public StudentDTO(Long id, String firstName, String lastName, String email, LocalDate birthDate, String indexNumber,
-			String username) {
+			String username, boolean active) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -27,6 +28,7 @@ public class StudentDTO {
 		this.birthDate = birthDate;
 		this.indexNumber = indexNumber;
 		this.username = username;
+		this.active = active;
 	}
 
 	public Long getId() {
@@ -83,5 +85,13 @@ public class StudentDTO {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 }
