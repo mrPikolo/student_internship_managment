@@ -1,12 +1,14 @@
 package internship.managment.model;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -25,6 +27,10 @@ public class Student {
 	private String email;
 	private LocalDate birthDate;
 	private String indexNumber;
+	
+	@OneToMany(mappedBy = "student")
+	private List<WorkLog> workLogs;
+	
 	public Long getId() {
 		return id;
 	}
@@ -66,6 +72,12 @@ public class Student {
 	}
 	public void setIndexNumber(String indexNumber) {
 		this.indexNumber = indexNumber;
+	}
+	public List<WorkLog> getWorkLogs() {
+		return workLogs;
+	}
+	public void setWorkLogs(List<WorkLog> workLogs) {
+		this.workLogs = workLogs;
 	}
 	
 	

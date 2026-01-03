@@ -1,5 +1,9 @@
 package internship.managment.controller;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +18,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import internship.managment.dto.CreateStudentDTO;
 import internship.managment.dto.StudentDTO;
@@ -49,4 +55,37 @@ public class StudentController {
     public void delete(@PathVariable Long id) {
 		studentService.softDeleteStudent(id);
     }
+	
+	@PostMapping("/upload")
+    public ResponseEntity<String> uploadCSV(@RequestParam("file") MultipartFile file) {
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
+
+            String line;
+            reader.readLine(); // skip header
+
+            while ((line = reader.readLine()) != null) {
+            	
+                String[] data = line.split(",");
+                
+                CreateStudentDTO dto = new CreateStudentDTO();
+                dto.setFirstName(data[0]);
+                dto.setLastName(data[1]);
+                dto.setEmail(data[2]);
+                dto.setIndexNumber(data[3]);
+                dto.setBirthDate(LocalDate.parse(data[4]));
+                dto.setUsername(data[5]);
+                
+                studentService.create(dto);
+            }
+            
+            return ResponseEntity.ok("CSV upload sucsess");
+            
+        } catch (IOException e) {
+        	return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body("Error processing CSV file");
+		}
+        
+	}
 }
