@@ -2,6 +2,7 @@ package internship.managment.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,6 +62,27 @@ public class StudentService {
 		}
 		
 		return allDTO;
+	}
+
+	public StudentDTO updateStudent(Long id, CreateStudentDTO csDTO) {
+		
+		StudentDTO studentDTO= null;
+		
+		Optional<Student> studentOpt = studentRepository.findById(id);
+		
+		if(studentOpt.isPresent()) {
+			Student s = studentOpt.get();
+			s.setFirstName(csDTO.getFirstName());
+			s.setLastName(csDTO.getLastName());
+			s.setEmail(csDTO.getEmail());
+			s.setIndexNumber(csDTO.getIndexNumber());
+			s.setBirthDate(csDTO.getBirthDate());
+			s.getUser().setUsername(csDTO.getUsername());
+			
+			studentRepository.save(s);
+			studentDTO = mapper.toDTO(s);
+		}
+		return studentDTO;
 	}
 
 }
