@@ -36,7 +36,7 @@ public class AuthController {
 
             Map<String, Object> response = new HashMap<>();
             
-            if (user != null) {
+            if (user != null && authService.isActive(request.getUsername())) {
             	LoginResponseDTO loginResponse = new LoginResponseDTO();
             	loginResponse.setId(user.getId());
             	loginResponse.setUsername(user.getUsername());
@@ -45,6 +45,10 @@ public class AuthController {
             	response.put("user", loginResponse);
             	
             	return ResponseEntity.ok(response);
+            }
+            else if ( !authService.isActive(request.getUsername())) {
+            	return ResponseEntity.badRequest()
+                        .body(Map.of("error", "User inactive"));
             }
             else {
             	return ResponseEntity.badRequest()

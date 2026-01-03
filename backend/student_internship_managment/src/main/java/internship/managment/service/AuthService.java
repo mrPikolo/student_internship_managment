@@ -17,7 +17,7 @@ public class AuthService {
 
 	public User authenticate(String username, String password) {
 		
-		Optional<User> userOpt = userRepository.findByUsernameAndActiveTrue(username);
+		Optional<User> userOpt = userRepository.findByUsername(username);
 
 		/*
 		 * if (userOpt.isEmpty()) { throw new RuntimeException("Korisnik ne postoji"); }
@@ -34,6 +34,10 @@ public class AuthService {
 		 
 
         return user;
+	}
+	
+	public boolean isActive(String username) {
+		return userRepository.existsByUsernameAndActiveTrue(username);
 	}
 	
 	public User createUser(User user) {
