@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Company {
@@ -15,6 +17,11 @@ public class Company {
 	private String name;
 	private String description;
 	private boolean active;
+	
+	@OneToOne
+	@JoinColumn(name="user_id")
+	private User account;
+	
 	public Long getId() {
 		return id;
 	}
@@ -39,6 +46,11 @@ public class Company {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-	
+	public User getAccount() {
+		return account;
+	}
+	public void setAccount(User account) {
+		this.account = account;
+	}
 	
 }
