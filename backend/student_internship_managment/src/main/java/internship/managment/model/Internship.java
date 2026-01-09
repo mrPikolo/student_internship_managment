@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
@@ -18,6 +19,7 @@ public class Internship {
     private Long id;
 	
 	@ManyToOne
+	@JoinColumn(name="company_id")
 	private Company company;
 	
 	private String title;
@@ -25,9 +27,14 @@ public class Internship {
 	@Lob
 	private String description;
 	
+	// REQUIERMENTS
 	private String technologies;
+	private int minYear;
+	private int maxStudents;
 	private LocalDate startDate;
 	private LocalDate endDate;
+	
+	private boolean active;
 	
 	public Long getId() {
 		return id;
@@ -70,6 +77,24 @@ public class Internship {
 	}
 	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
+	}
+	public int getMinYear() {
+		return minYear;
+	}
+	public void setMinYear(int minYear) {
+		this.minYear = minYear;
+	}
+	public int getMaxStudents() {
+		return maxStudents;
+	}
+	public void setMaxStudents(int maxStudents) {
+		this.maxStudents = maxStudents;
+	}
+	public boolean isActive() {
+		return active;
+	}
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 	
 	
