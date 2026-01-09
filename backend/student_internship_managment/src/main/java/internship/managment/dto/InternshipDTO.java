@@ -1,40 +1,20 @@
-package internship.managment.model;
+package internship.managment.dto;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import internship.managment.model.Company;
 
-@Entity
-public class Internship {
+public class InternshipDTO {
 
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-	
-	@ManyToOne
-	@JoinColumn(name="company_id")
-	private Company company;
-	
+	private Long id;
+	private String companyName;	
 	private String title;
-	
-	@Lob
-	private String description;
-	
-	// REQUIERMENTS
+	private String description;	
 	private String technologies;
 	private int minYear;
 	private int maxStudents;
 	private LocalDate startDate;
 	private LocalDate endDate;
-	
-	private boolean active;
 	
 	public Long getId() {
 		return id;
@@ -42,11 +22,11 @@ public class Internship {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Company getCompany() {
-		return company;
+	public String getCompanyName() {
+		return companyName;
 	}
-	public void setCompany(Company company) {
-		this.company = company;
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
 	public String getTitle() {
 		return title;
@@ -90,12 +70,5 @@ public class Internship {
 	public void setMaxStudents(int maxStudents) {
 		this.maxStudents = maxStudents;
 	}
-	public boolean isActive() {
-		return active;
-	}
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-	
-	
+		
 }
