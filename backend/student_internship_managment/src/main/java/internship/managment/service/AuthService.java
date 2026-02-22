@@ -18,21 +18,18 @@ public class AuthService {
 	public User authenticate(String username, String password) {
 		
 		Optional<User> userOpt = userRepository.findByUsername(username);
-
-		/*
-		 * if (userOpt.isEmpty()) { throw new RuntimeException("Korisnik ne postoji"); }
-		 */
-
-        User user = userOpt.get();
-
-        // password chek
+		User user = null;
 		
-		  if (! password.equals( user.getPassword())){ 
-			 // throw new  RuntimeException("Pogrešna lozinka");
-			  user = null;
-		  }
-		 
-
+		  if (!userOpt.isEmpty()) { 
+			  user = userOpt.get(); 
+			  
+			// password chek
+				
+			  if ( ! password.equals( user.getPassword())){ 
+				 // throw new  RuntimeException("Pogrešna lozinka");
+				  user = null;
+			  }
+		}      
         return user;
 	}
 	
