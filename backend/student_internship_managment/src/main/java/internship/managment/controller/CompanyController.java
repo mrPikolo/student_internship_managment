@@ -18,7 +18,7 @@ import internship.managment.dto.CompanyResponseDTO;
 import internship.managment.service.CompanyService;
 
 @RestController
-@RequestMapping("/api/companys")
+@RequestMapping("/api/companies")
 @CrossOrigin(origins = "http://localhost:8085")
 public class CompanyController {
 	
