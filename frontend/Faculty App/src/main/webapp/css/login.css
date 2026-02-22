@@ -1,0 +1,9 @@
+.login-card {
+    width: 90%;
+}
+
+@media (min-width: 768px) {
+    .login-card {
+        width: 350px;
+    }
+}
