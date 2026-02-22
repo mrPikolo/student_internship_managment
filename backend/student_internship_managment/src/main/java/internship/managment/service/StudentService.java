@@ -96,4 +96,17 @@ public class StudentService {
 		}
 	}
 
+	public StudentDTO getStudent(Long id) {
+		Optional<Student> studentOpt = studentRepository.findById(id);
+		StudentDTO studentDTO= null;
+		
+        if (studentOpt.isPresent()) {
+        	Student s = studentOpt.get();
+        	studentDTO = mapper.toDTO(s);
+            return studentDTO;
+        } else {
+            throw new RuntimeException("Student  ID " + id + " not found!");
+        }
+	}
+
 }

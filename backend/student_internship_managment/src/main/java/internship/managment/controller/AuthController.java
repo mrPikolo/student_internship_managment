@@ -46,10 +46,13 @@ public class AuthController {
             	
             	return ResponseEntity.ok(response);
             }
-            else if ( !authService.isActive(request.getUsername())) {
+            else if (user != null && !authService.isActive(request.getUsername())) {
             	return ResponseEntity.badRequest()
                         .body(Map.of("error", "User inactive"));
-            }
+			} /*
+				 * else if (user == null) { return ResponseEntity.badRequest()
+				 * .body(Map.of("error", "Invalid username")); }
+				 */
             else {
             	return ResponseEntity.badRequest()
                         .body(Map.of("error", "Invalid username or password"));
