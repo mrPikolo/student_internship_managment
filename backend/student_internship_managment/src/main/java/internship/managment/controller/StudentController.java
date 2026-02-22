@@ -46,12 +46,17 @@ public class StudentController {
 		return studentService.getAll();
 	}
 	
+	@GetMapping("/{id}")
+	public StudentDTO getStudent(@PathVariable Long id) {
+		return studentService.getStudent(id);
+	}
+	
 	@PutMapping("/{id}")
 	public StudentDTO updateStudent(@PathVariable Long id,@RequestBody CreateStudentDTO studentDTO) {
 		return studentService.updateStudent(id,studentDTO);
 	}
 	
-	@PatchMapping("/{id}/delete")
+	@DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
 		studentService.softDeleteStudent(id);
     }
