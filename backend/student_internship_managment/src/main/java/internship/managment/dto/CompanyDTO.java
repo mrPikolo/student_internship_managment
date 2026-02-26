@@ -5,6 +5,7 @@ public class CompanyDTO {
 	private String name;
     private String description;
     private String username;
+    private String password;
     
 	public String getName() {
 		return name;
@@ -23,6 +24,12 @@ public class CompanyDTO {
 	}
 	public void setUsername(String username) {
 		this.username = username;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
 	}
     
 }

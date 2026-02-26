@@ -5,6 +5,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -15,7 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import faculty_app.dto.Company;
+import faculty_app.dto.CreateCompanyRequest;
 import faculty_app.dto.Student;
+import faculty_app.dto.UpdateStudentRequest;
 import faculty_app.net.HttpClientProvider;
 import faculty_app.net.JsonManager;
 
@@ -72,16 +76,105 @@ public class CompaniesController extends HttpServlet {
 	        case "create":
 	            createCompany(request, response);
 	            break;
+	        case "activate":
+	        	activateCompany(request, response);
+	            break;
+	        case "deactivate":
+	        	deactivateCompany(request, response);
+	            break;
 	    }
 	}
 	
+	private void deactivateCompany(HttpServletRequest request, HttpServletResponse response) 
+			throws IOException, ServletException {
+		
+		String id = request.getParameter("companyId");
+		// data from api
+		String url = "http://localhost:8085/api/companies/" + id + "/deactivate" ;
+		try {
+			HttpClient client = HttpClientProvider.getClient();
+			HttpRequest apiRequest = HttpRequest.
+					newBuilder()
+					.uri(URI.create(url))
+					.POST(HttpRequest.BodyPublishers.ofString(""))
+					.build();
+
+			HttpResponse<String> apiResponse = client.send(apiRequest, HttpResponse.BodyHandlers.ofString());
+			response.sendRedirect("companies");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	private void activateCompany(HttpServletRequest request, HttpServletResponse response) 
+			throws IOException, ServletException {
+		String id = request.getParameter("companyId");
+		// data from api
+		String url = "http://localhost:8085/api/companies/" + id + "/activate" ;
+		try {
+			HttpClient client = HttpClientProvider.getClient();
+			HttpRequest apiRequest = HttpRequest.
+					newBuilder()
+					.uri(URI.create(url))
+					.POST(HttpRequest.BodyPublishers.ofString(""))
+					.build();
+
+			HttpResponse<String> apiResponse = client.send(apiRequest, HttpResponse.BodyHandlers.ofString());
+			response.sendRedirect("companies");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
 	private void createCompany(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
+		
+		HttpClient client = HttpClientProvider.getClient();
+		
+		String jsonBody = JsonManager.createCompanyToJson(
+				new CreateCompanyRequest(
+						request.getParameter("name"),
+						request.getParameter("description"),
+						request.getParameter("username"),
+						request.getParameter("password")
+						));
+		HttpRequest apiRequest = HttpRequest
+				.newBuilder()
+				.uri(URI.create("http://localhost:8085/api/companies"))
+				.header("Content-Type", "application/json")
+				.POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+				.build();
+	    
+	        
+	        try {
+				HttpResponse<String> apiResponse = client.send(apiRequest, HttpResponse.BodyHandlers.ofString());
+				
+				response.sendRedirect("companies");
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+	
 		
 	}
 
 	private void showAddForm(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
+		
+		RequestDispatcher dispatcher =
+				request.getRequestDispatcher("/WEB-INF/pages/companyCreate.jsp");
+				try {
+					dispatcher.forward(request, response);
+				} catch (ServletException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		
 	}
 
@@ -89,7 +182,7 @@ public class CompaniesController extends HttpServlet {
 		
 		// data from api
 		String url = "http://localhost:8085/api/companies";
-		List<Student> list = null;
+		List<Company> list = null;
 		try {
 			HttpClient client = HttpClientProvider.getClient();
 			HttpRequest apiRequest = HttpRequest.
@@ -101,14 +194,13 @@ public class CompaniesController extends HttpServlet {
 
 			int statusCode = apiResponse.statusCode();
 			String apiResult = apiResponse.body();
+			list = JsonManager.responseCompanyList(apiResult);
 			
-			list = JsonManager.responseStudentList(apiResult);
-			
-			request.setAttribute("companysList", list);	
+			request.setAttribute("companiesList", list);	
 
 			
 			RequestDispatcher dispatcher =
-			request.getRequestDispatcher("/WEB-INF/pages/companysEdit.jsp");
+			request.getRequestDispatcher("/WEB-INF/pages/companiesEdit.jsp");
 			dispatcher.forward(request, response);
 			
 			

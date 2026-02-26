@@ -10,6 +10,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import faculty_app.dto.AuthUser;
+import faculty_app.dto.Company;
+import faculty_app.dto.CreateCompanyRequest;
 import faculty_app.dto.Student;
 import faculty_app.dto.UpdateStudentRequest;
 import faculty_app.util.LocalDateAdapter;
@@ -78,5 +80,14 @@ public class JsonManager {
 	
 	public static String updateStudentToJson(UpdateStudentRequest usr) {
 		return gson.toJson(usr);
+	}
+	
+	public static List<Company> responseCompanyList (String responseBody) {
+		List<Company> response = gson.fromJson(responseBody, new TypeToken<List<Company>>() {}.getType());
+		return response;
+	}
+	
+	public static String createCompanyToJson(CreateCompanyRequest ccr) {
+		return gson.toJson(ccr);
 	}
 }

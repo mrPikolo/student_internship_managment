@@ -39,6 +39,7 @@ public class CompanyService {
 			User u = new User();
 			u.setUsername(companyDTO.getUsername());
 			u.setPassword(defaultPassword);
+			u.setPassword(companyDTO.getPassword());
 			u.setRole(Role.COMPANY);
 			u.setActive(true);
 			userRepository.save(u);
