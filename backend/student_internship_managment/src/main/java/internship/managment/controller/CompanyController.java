@@ -1,6 +1,8 @@
 package internship.managment.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import internship.managment.dto.CompanyDTO;
 import internship.managment.dto.CompanyResponseDTO;
+import internship.managment.dto.LoginRequestDTO;
+import internship.managment.model.User;
+import internship.managment.service.AuthService;
 import internship.managment.service.CompanyService;
 
 @RestController
@@ -23,7 +28,44 @@ import internship.managment.service.CompanyService;
 public class CompanyController {
 	
 	@Autowired
+	private AuthService authService;
+	
+	@Autowired
 	private CompanyService companyService;
+	
+	@PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequestDTO request) {
+
+        User user = authService.authenticate(request.getUsername(), request.getPassword());
+
+        if(user == null){
+            return ResponseEntity.badRequest()
+                    .body(Map.of("error", "Invalid username or password"));
+        }
+
+        if(!"COMPANY".equals(user.getRole().toString())){
+            return ResponseEntity.badRequest()
+                    .body(Map.of("error", "You do not have access to this application."));
+        }
+
+        boolean isActive = authService.isActive(request.getUsername());
+        if(!isActive){
+            return ResponseEntity.badRequest()
+                    .body(Map.of("error", "Account is inactive."));
+        }
+
+        
+        CompanyResponseDTO response = new CompanyResponseDTO();
+        response.setId(user.getId());
+        response.setName(user.getUsername());        
+        response.setDescription("...");            
+        response.setAccountStatus(isActive);
+
+        Map<String,Object> map = new HashMap<>();
+        map.put("user", response);
+
+        return ResponseEntity.ok(map);
+    }
 	
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody CompanyDTO companyDTO) {
@@ -39,6 +81,16 @@ public class CompanyController {
 	@GetMapping
 	public List<CompanyResponseDTO> getAll() {
 		return companyService.getAll();
+	}
+	
+	@GetMapping("/{userId}")
+	public CompanyResponseDTO getByUserId(@PathVariable Long userId) {
+		return companyService.getByUser(userId);
+	}
+	
+	@GetMapping("/name/{userId}")
+	public String getCompanyNameByUser(@PathVariable Long userId) {
+		return companyService.getCompanyNameByUser(userId);
 	}
 	
 	@PostMapping("/{id}/activate")

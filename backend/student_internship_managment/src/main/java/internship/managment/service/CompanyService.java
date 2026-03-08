@@ -2,6 +2,7 @@ package internship.managment.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import internship.managment.component.CompanyMapper;
 import internship.managment.dto.CompanyDTO;
 import internship.managment.dto.CompanyResponseDTO;
 import internship.managment.model.Company;
+import internship.managment.model.Internship;
 import internship.managment.model.Role;
 import internship.managment.model.User;
 import internship.managment.repository.CompanyRepository;
@@ -33,7 +35,6 @@ public class CompanyService {
 		if(userRepository.existsByUsername(companyDTO.getUsername()))
 			return null;
 		else {		
-			CompanyDTO dto = null;
 			String defaultPassword = "company";
 			
 			User u = new User();
@@ -52,6 +53,24 @@ public class CompanyService {
 			companyRepository.save(c);
 			return companyDTO;
 		}
+	}
+	
+	public CompanyResponseDTO getByUser(Long userId) {
+		Optional<Company> optC = companyRepository.findByAccountId(userId);
+		if(optC.isPresent()) {
+			Company c = optC.get();
+			return mapper.toDTO(c);
+		}
+		return null;
+	}
+	
+	public String getCompanyNameByUser(Long userId) {
+		Optional<Company> optC = companyRepository.findByAccountId(userId);
+		if(optC.isPresent()) {
+			Company c = optC.get();
+			return c.getName();
+		}
+		return " ";
 	}
 
 	public List<CompanyResponseDTO> getAll() {
