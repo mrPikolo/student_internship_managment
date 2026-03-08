@@ -12,4 +12,6 @@ public interface InternshipRepository extends JpaRepository<Internship, Long> {
 	@Query("select i from Internship i where i.active = true")
 	List<Internship> findAllActive();
 
+	List<Internship> findByCompanyId(Long id);
+
 }

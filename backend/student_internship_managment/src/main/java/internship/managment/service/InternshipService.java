@@ -82,7 +82,7 @@ public class InternshipService {
 		return iDTO;
 	}
 
-	public void softDeleteStudent(Long id) {
+	public void softDeleteInternship(Long id) {
 		Optional<Internship> optI = internshipRepository.findById(id);
 		if(optI.isPresent()) {
 			Internship i = optI.get();
@@ -90,6 +90,46 @@ public class InternshipService {
 			internshipRepository.save(i);
 		}
 		
+	}
+	
+	public void deleteInternship(Long id) {
+		Optional<Internship> optI = internshipRepository.findById(id);
+		if(optI.isPresent()) {
+			Internship i = optI.get();
+			internshipRepository.delete(i);
+		}
+		
+	}
+
+	public List<InternshipDTO> getByUser(Long userId) {
+		
+		Optional<Company> optC = companyRepository.findByAccountId(userId);
+		
+		if(optC.isPresent()) {
+			Company c = optC.get();
+			List<Internship> listI =  internshipRepository.findByCompanyId(c.getId());
+			List<InternshipDTO> listDTO = new ArrayList<>();
+			
+			for(Internship i : listI) {
+				
+				if(i.isActive()) {
+					InternshipDTO dto = internshipMapper.toDTO(i);					
+					listDTO.add(dto);
+				}
+			}
+			
+			return listDTO;
+		}
+		return null;
+	}
+
+	public InternshipDTO getById(Long internshipId) {
+		Optional<Internship> optI = internshipRepository.findById(internshipId);
+		if(optI.isPresent()) {
+			Internship i = optI.get();
+			return internshipMapper.toDTO(i);
+		}
+		return null;
 	}
 
 }

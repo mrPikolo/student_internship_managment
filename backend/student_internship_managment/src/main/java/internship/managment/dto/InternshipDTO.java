@@ -70,5 +70,11 @@ public class InternshipDTO {
 	public void setMaxStudents(int maxStudents) {
 		this.maxStudents = maxStudents;
 	}
+	@Override
+	public String toString() {
+		return "InternshipDTO [id=" + id + ", companyName=" + companyName + ", title=" + title + ", description="
+				+ description + ", technologies=" + technologies + ", minYear=" + minYear + ", maxStudents="
+				+ maxStudents + ", startDate=" + startDate + ", endDate=" + endDate + "]";
+	}
 		
 }

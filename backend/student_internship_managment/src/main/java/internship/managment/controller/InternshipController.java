@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,9 +34,22 @@ public class InternshipController {
 		return internshipService.getAll();
 	}
 	
+	@GetMapping("{internshipId}")
+	public InternshipDTO getById(@PathVariable Long internshipId) {
+		
+		return internshipService.getById(internshipId);
+	}
+	
+	@GetMapping("/company/{userId}")
+	public List<InternshipDTO> getByUser(@PathVariable Long userId ) {
+		
+		return internshipService.getByUser(userId);
+	}
+	
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody InternshipDTO internshipDTO ) {
 		
+		System.out.println("create internship: " + internshipDTO);
 		InternshipDTO response = internshipService.create(internshipDTO);
 		if (response != null)
 			return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -44,13 +58,14 @@ public class InternshipController {
                     .body("Company not exists!");
 	}
 	
-	@PutMapping("/{id}")
+	@PostMapping("/{id}")
 	public InternshipDTO update(@PathVariable Long id ,@RequestBody UpdateInternshipDTO uiDTO) {
 		return internshipService.update(id,uiDTO);
 	}
 	
-	@PatchMapping("/{id}/delete")
+	@DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
-		internshipService.softDeleteStudent(id);
+		//internshipService.softDeleteInternship(id);
+		internshipService.deleteInternship(id);
     }
 }
