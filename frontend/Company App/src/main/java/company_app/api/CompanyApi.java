@@ -25,6 +25,18 @@ public class CompanyApi {
         return gson.fromJson(response, LoginResponseDTO.class);
     }
     
+    public static LoginResponseDTO changePassword(Long userId,String curentPass, String newPass) throws Exception {
+    	
+    	String json = """
+                {
+                  "curentPassword": "%s",
+                  "newPassword": "%s"
+                }
+            """.formatted(curentPass, newPass);
+    	String response = ApiClient.post("/companies/" + userId + "/change", json);
+    	return gson.fromJson(response, LoginResponseDTO.class);
+    }
+    
     public static CompanyDTO getByUser(Long userId) throws Exception {
 
         String json = ApiClient.get("/companies/" + userId);

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import internship.managment.component.CompanyMapper;
 import internship.managment.dto.CompanyDTO;
 import internship.managment.dto.CompanyResponseDTO;
+import internship.managment.dto.PasswordDTO;
 import internship.managment.model.Company;
 import internship.managment.model.Internship;
 import internship.managment.model.Role;
@@ -107,6 +108,27 @@ public class CompanyService {
         Company deactivated = companyRepository.save(company);
         
         return mapper.toDTO(deactivated);
+	}
+
+	public CompanyResponseDTO updatePassword(Long userId, PasswordDTO request) {
+		
+		CompanyResponseDTO response = null;
+		
+		Optional<Company> optC = companyRepository.findByAccountId(userId);
+		
+		if(optC.isPresent()) {
+			
+			Company c = optC.get();
+			if(request.getCurentPassword()
+					.equals( c.getAccount().getPassword() ) ) {
+				System.out.println("--- CompanyService -- CHANGE PASSWORD new="+request.getNewPassword() + " curent="+ request.getCurentPassword());
+				c.getAccount().setPassword(request.getNewPassword());
+				Company updated = companyRepository.save(c);
+				System.out.println("--- CompanyService -- CHANGE PASSWORD \n" + updated.getAccount());
+				response =  mapper.toDTO(updated);
+			}
+		}
+		return response;
 	}
 
 }

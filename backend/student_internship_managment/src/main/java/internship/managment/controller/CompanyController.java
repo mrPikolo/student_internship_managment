@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import internship.managment.dto.CompanyDTO;
 import internship.managment.dto.CompanyResponseDTO;
 import internship.managment.dto.LoginRequestDTO;
+import internship.managment.dto.PasswordDTO;
 import internship.managment.model.User;
 import internship.managment.service.AuthService;
 import internship.managment.service.CompanyService;
@@ -66,6 +67,23 @@ public class CompanyController {
 
         return ResponseEntity.ok(map);
     }
+	
+	@PostMapping("/{userId}/change")
+    public ResponseEntity<?> changePassword(@PathVariable Long userId, @RequestBody PasswordDTO request) {
+
+		CompanyResponseDTO company = companyService.updatePassword(userId, request);
+		
+		if(company == null){
+            return ResponseEntity.badRequest()
+                    .body(Map.of("error", "Invalid password"));
+        }
+		
+		Map<String,Object> map = new HashMap<>();
+        map.put("user", company);
+
+        return ResponseEntity.ok(map);
+	}    
+        
 	
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody CompanyDTO companyDTO) {
