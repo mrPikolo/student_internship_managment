@@ -26,7 +26,10 @@ public class Student {
 	private String lastName;
 	private String email;
 	private LocalDate birthDate;
-	private String indexNumber;
+	private String university;
+	private String faculty;
+	private int yearOfStudy;
+	private double gpa;
 	
 	@OneToMany(mappedBy = "student")
 	private List<WorkLog> workLogs;
@@ -67,19 +70,35 @@ public class Student {
 	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
 	}
-	public String getIndexNumber() {
-		return indexNumber;
-	}
-	public void setIndexNumber(String indexNumber) {
-		this.indexNumber = indexNumber;
-	}
 	public List<WorkLog> getWorkLogs() {
 		return workLogs;
 	}
 	public void setWorkLogs(List<WorkLog> workLogs) {
 		this.workLogs = workLogs;
 	}
-	
-	
+	public String getUniversity() {
+		return university;
+	}
+	public void setUniversity(String university) {
+		this.university = university;
+	}
+	public String getFaculty() {
+		return faculty;
+	}
+	public void setFaculty(String faculty) {
+		this.faculty = faculty;
+	}
+	public int getYearOfStudy() {
+		return yearOfStudy;
+	}
+	public void setYearOfStudy(int yearOfStudy) {
+		this.yearOfStudy = yearOfStudy;
+	}
+	public double getGpa() {
+		return gpa;
+	}
+	public void setGpa(double gpa) {
+		this.gpa = gpa;
+	}
 	
 }

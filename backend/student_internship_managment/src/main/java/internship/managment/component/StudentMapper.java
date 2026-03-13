@@ -14,8 +14,10 @@ public class StudentMapper {
         dto.setFirstName(student.getFirstName());
         dto.setLastName(student.getLastName());
         dto.setEmail(student.getEmail());
-        dto.setIndexNumber(student.getIndexNumber());
-        dto.setBirthDate(student.getBirthDate());
+        dto.setUniversity(student.getUniversity());
+        dto.setFaculty(student.getFaculty());
+        dto.setYearOfStudy(student.getYearOfStudy());
+        dto.setGpa(student.getGpa());
         dto.setUsername(student.getUser().getUsername());
         dto.setActive(student.getUser().isActive());
         return dto;

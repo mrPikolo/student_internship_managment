@@ -1,0 +1,4 @@
+/* Minimal custom styles — layout is handled by Bootstrap */
+.card { cursor: pointer; }
+.card .display-6 { line-height: 1; }
+

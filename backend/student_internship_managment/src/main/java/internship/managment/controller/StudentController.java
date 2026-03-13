@@ -28,7 +28,7 @@ import internship.managment.service.StudentService;
 
 @RestController
 @RequestMapping("/api/students")
-@CrossOrigin(origins = "http://localhost:8085")
+@CrossOrigin(origins = "http://localhost:4200")
 public class StudentController {
 	
 	@Autowired
@@ -49,6 +49,11 @@ public class StudentController {
 	@GetMapping("/{id}")
 	public StudentDTO getStudent(@PathVariable Long id) {
 		return studentService.getStudent(id);
+	}
+	
+	@GetMapping("/{userId}/user")
+	public StudentDTO getStudentByUserIdgetStudent(@PathVariable Long userId) {
+		return studentService.getStudentByUserId(userId);
 	}
 	
 	@PutMapping("/{id}")

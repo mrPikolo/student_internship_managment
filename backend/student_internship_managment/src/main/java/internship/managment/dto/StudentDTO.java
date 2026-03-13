@@ -8,8 +8,11 @@ public class StudentDTO {
 	private String firstName;
 	private String lastName;
 	private String email;
-	private LocalDate birthDate;
-	private String indexNumber;
+
+	private String university;
+	private String faculty;
+	private int yearOfStudy;
+	private double gpa;
 	
 	private String username;
 	private boolean active;
@@ -18,15 +21,19 @@ public class StudentDTO {
 		super();
 	}
 
-	public StudentDTO(Long id, String firstName, String lastName, String email, LocalDate birthDate, String indexNumber,
-			String username, boolean active) {
+	
+
+	public StudentDTO(Long id, String firstName, String lastName, String email, String university, String faculty,
+			int yearOfStudy, double gpa, String username, boolean active) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.birthDate = birthDate;
-		this.indexNumber = indexNumber;
+		this.university = university;
+		this.faculty = faculty;
+		this.yearOfStudy = yearOfStudy;
+		this.gpa = gpa;
 		this.username = username;
 		this.active = active;
 	}
@@ -63,22 +70,6 @@ public class StudentDTO {
 		this.email = email;
 	}
 
-	public LocalDate getBirthDate() {
-		return birthDate;
-	}
-
-	public void setBirthDate(LocalDate birthDate) {
-		this.birthDate = birthDate;
-	}
-
-	public String getIndexNumber() {
-		return indexNumber;
-	}
-
-	public void setIndexNumber(String indexNumber) {
-		this.indexNumber = indexNumber;
-	}
-
 	public String getUsername() {
 		return username;
 	}
@@ -93,5 +84,53 @@ public class StudentDTO {
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+
+
+
+	public String getUniversity() {
+		return university;
+	}
+
+
+
+	public void setUniversity(String university) {
+		this.university = university;
+	}
+
+
+
+	public String getFaculty() {
+		return faculty;
+	}
+
+
+
+	public void setFaculty(String faculty) {
+		this.faculty = faculty;
+	}
+
+
+
+	public int getYearOfStudy() {
+		return yearOfStudy;
+	}
+
+
+
+	public void setYearOfStudy(int yearOfStudy) {
+		this.yearOfStudy = yearOfStudy;
+	}
+
+
+
+	public double getGpa() {
+		return gpa;
+	}
+
+
+
+	public void setGpa(double gpa) {
+		this.gpa = gpa;
 	}
 }

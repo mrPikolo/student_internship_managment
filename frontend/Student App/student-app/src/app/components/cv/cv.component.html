@@ -1,0 +1,184 @@
+<p>cv works!</p>
+
+<div class="container py-4">
+	<div class="d-flex justify-content-between align-items-center mb-3">
+		<div>
+			<h4 class="mb-0">Europass CV Editor</h4>
+			<small class="text-muted">Fill in your CV details</small>
+		</div>
+		<div>
+			<button class="btn btn-outline-secondary me-2" (click)="loadCV()">Reload</button>
+			<button class="btn btn-primary" (click)="onSubmit()" [disabled]="saving">{{ saving ? 'Saving...' : 'Save CV' }}</button>
+		</div>
+	</div>
+
+	<form [formGroup]="cvForm">
+		<!-- Personal Info -->
+		<div class="card mb-3">
+			<div class="card-body">
+				<h5 class="card-title">Personal Information</h5>
+				<div formGroupName="personalInfo" class="row gy-2">
+					<div class="col-md-6">
+						<label class="form-label">First name</label>
+						<input class="form-control" formControlName="firstName" />
+					</div>
+					<div class="col-md-6">
+						<label class="form-label">Last name</label>
+						<input class="form-control" formControlName="lastName" />
+					</div>
+					<div class="col-md-6">
+						<label class="form-label">Email</label>
+						<input class="form-control" formControlName="email" />
+					</div>
+					<div class="col-md-6">
+						<label class="form-label">Phone</label>
+						<input class="form-control" formControlName="phone" />
+					</div>
+					<div class="col-12">
+						<label class="form-label">Address</label>
+						<input class="form-control" formControlName="address" />
+					</div>
+					<div class="col-md-4">
+						<label class="form-label">Date of birth</label>
+						<input type="date" class="form-control" formControlName="dateOfBirth" />
+					</div>
+					<div class="col-md-8">
+						<label class="form-label">Photo</label>
+						<input type="file" class="form-control" (change)="onFileSelected($event)" />
+						<div *ngIf="imagePreview" class="mt-2">
+							<img [src]="imagePreview" alt="Preview" class="img-thumbnail" style="max-width:150px;" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Education -->
+		<div class="card mb-3">
+			<div class="card-body">
+				<div class="d-flex justify-content-between align-items-center mb-2">
+					<h5 class="card-title mb-0">Education</h5>
+					<button class="btn btn-sm btn-outline-primary" type="button" (click)="addEducation()">Add education</button>
+				</div>
+				<div formArrayName="education">
+					<div *ngFor="let edu of educationArray.controls; let i = index" [formGroupName]="i" class="border rounded p-3 mb-2">
+						<div class="row g-2">
+							<div class="col-md-6"><input class="form-control" formControlName="institution" placeholder="Institution" /></div>
+							<div class="col-md-6"><input class="form-control" formControlName="degree" placeholder="Degree" /></div>
+							<div class="col-md-6"><input class="form-control" formControlName="fieldOfStudy" placeholder="Field of study" /></div>
+							<div class="col-md-3"><input type="date" class="form-control" formControlName="startDate" /></div>
+							<div class="col-md-3"><input type="date" class="form-control" formControlName="endDate" /></div>
+							<div class="col-12 mt-2 d-flex justify-content-end">
+								<button class="btn btn-sm btn-danger me-2" type="button" (click)="removeEducation(i)">Remove</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Work Experience -->
+		<div class="card mb-3">
+			<div class="card-body">
+				<div class="d-flex justify-content-between align-items-center mb-2">
+					<h5 class="card-title mb-0">Work Experience</h5>
+					<button class="btn btn-sm btn-outline-primary" type="button" (click)="addWorkExperience()">Add experience</button>
+				</div>
+				<div formArrayName="workExperience">
+					<div *ngFor="let work of workExperienceArray.controls; let i = index" [formGroupName]="i" class="border rounded p-3 mb-2">
+						<div class="row g-2">
+							<div class="col-md-6"><input class="form-control" formControlName="company" placeholder="Company" /></div>
+							<div class="col-md-6"><input class="form-control" formControlName="position" placeholder="Position" /></div>
+							<div class="col-md-3"><input type="date" class="form-control" formControlName="startDate" /></div>
+							<div class="col-md-3"><input type="date" class="form-control" formControlName="endDate" /></div>
+							<div class="col-12"><textarea class="form-control" formControlName="description" rows="2" placeholder="Description"></textarea></div>
+							<div class="col-12 mt-2 d-flex justify-content-end">
+								<button class="btn btn-sm btn-danger" type="button" (click)="removeWorkExperience(i)">Remove</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Internships -->
+		<div class="card mb-3">
+			<div class="card-body">
+				<div class="d-flex justify-content-between align-items-center mb-2">
+					<h5 class="card-title mb-0">Internships</h5>
+					<button class="btn btn-sm btn-outline-primary" type="button" (click)="addInternship()">Add internship</button>
+				</div>
+				<div formArrayName="internships">
+					<div *ngFor="let it of internshipsArray.controls; let i = index" [formGroupName]="i" class="border rounded p-3 mb-2">
+						<div class="row g-2">
+							<div class="col-md-6"><input class="form-control" formControlName="company" placeholder="Company" /></div>
+							<div class="col-md-6"><input class="form-control" formControlName="position" placeholder="Position" /></div>
+							<div class="col-md-3"><input type="date" class="form-control" formControlName="startDate" /></div>
+							<div class="col-md-3"><input type="date" class="form-control" formControlName="endDate" /></div>
+							<div class="col-12"><textarea class="form-control" formControlName="description" rows="2" placeholder="Description"></textarea></div>
+							<div class="col-12 mt-2 d-flex justify-content-end">
+								<button class="btn btn-sm btn-danger" type="button" (click)="removeInternship(i)">Remove</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Skills & Interests & Languages -->
+		<div class="row">
+			<div class="col-md-6">
+				<div class="card mb-3">
+					<div class="card-body">
+						<div class="d-flex justify-content-between align-items-center mb-2">
+							<h5 class="card-title mb-0">Skills</h5>
+							<button class="btn btn-sm btn-outline-primary" type="button" (click)="addSkill()">Add skill</button>
+						</div>
+						<div formArrayName="skills">
+							<div *ngFor="let s of skillsArray.controls; let i = index" [formGroupName]="i" class="d-flex gap-2 mb-2">
+								<input class="form-control" formControlName="name" placeholder="Skill" />
+								<select class="form-select" formControlName="level">
+									<option *ngFor="let lvl of skillLevels" [value]="lvl">{{ lvl }}</option>
+								</select>
+								<button class="btn btn-sm btn-danger" type="button" (click)="removeSkill(i)">x</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="card mb-3">
+					<div class="card-body">
+						<div class="d-flex justify-content-between align-items-center mb-2">
+							<h5 class="card-title mb-0">Languages</h5>
+							<button class="btn btn-sm btn-outline-primary" type="button" (click)="addLanguage()">Add language</button>
+						</div>
+						<div formArrayName="languages">
+							<div *ngFor="let l of languagesArray.controls; let i = index" [formGroupName]="i" class="d-flex gap-2 mb-2">
+								<input class="form-control" formControlName="name" placeholder="Language" />
+								<select class="form-select" formControlName="level">
+									<option *ngFor="let lvl of languageLevels" [value]="lvl">{{ lvl }}</option>
+								</select>
+								<button class="btn btn-sm btn-danger" type="button" (click)="removeLanguage(i)">x</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="card mb-3">
+					<div class="card-body">
+						<h5 class="card-title">Interests</h5>
+						<div formArrayName="interests">
+							<div *ngFor="let it of interestsArray.controls; let i = index" class="d-flex gap-2 mb-2">
+								<input class="form-control" [formControlName]="i" placeholder="Interest" />
+								<button class="btn btn-sm btn-danger" type="button" (click)="removeInterest(i)">x</button>
+							</div>
+							<button class="btn btn-sm btn-outline-primary" type="button" (click)="addInterest()">Add interest</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

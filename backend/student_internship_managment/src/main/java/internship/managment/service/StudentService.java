@@ -41,7 +41,6 @@ public class StudentService {
 		Student student = new Student();
 		student.setFirstName(dto.getFirstName());
 		student.setLastName(dto.getLastName());
-		student.setIndexNumber(dto.getIndexNumber());
 		student.setEmail(dto.getEmail());
 		student.setBirthDate(dto.getBirthDate());
 		student.setUser(user);
@@ -75,7 +74,6 @@ public class StudentService {
 			s.setFirstName(csDTO.getFirstName());
 			s.setLastName(csDTO.getLastName());
 			s.setEmail(csDTO.getEmail());
-			s.setIndexNumber(csDTO.getIndexNumber());
 			s.setBirthDate(csDTO.getBirthDate());
 			s.getUser().setUsername(csDTO.getUsername());
 			
@@ -107,6 +105,18 @@ public class StudentService {
         } else {
             throw new RuntimeException("Student  ID " + id + " not found!");
         }
+	}
+
+	public StudentDTO getStudentByUserId(Long userId) {
+		
+		Optional<Student> optS = studentRepository.findByUserId(userId);
+		StudentDTO studentDTO= null;
+		if(optS.isPresent()) {
+			Student s = optS.get();
+			studentDTO = mapper.toDTO(s);
+            return studentDTO;
+		}
+		return null;
 	}
 
 }
