@@ -7,6 +7,7 @@ import { PersonalInfo } from '../../models/personal-info.model';
 import { Education } from '../../models/education.model';
 import { WorkExperience } from '../../models/work-experience.model';
 import { Skill } from '../../models/skill.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cv',
@@ -28,6 +29,7 @@ export class CvComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private cvService: CvService
+    ,private router: Router
   ) {
     this.cvForm = this.createForm();
   }
@@ -249,6 +251,10 @@ export class CvComponent implements OnInit {
       };
       reader.readAsDataURL(file);
     }
+  }
+
+  navigateToDashboard(): void {
+    this.router.navigate(['/dashboard']);
   }
 
   removeSkill(index: number): void {

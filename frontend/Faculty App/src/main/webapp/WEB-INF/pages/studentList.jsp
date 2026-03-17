@@ -82,8 +82,10 @@
 					<div class="card-body">
 
 						<h6 class="fw-bold mb-1"><%=s.getFirstName() + " " + s.getLastName()%></h6>
-						<small class="text-muted d-block">index: <%=s.getIndexNumber()%></small>
-						<small class="text-muted d-block mb-3"><%=s.getEmail()%></small>
+						<small class="text-muted d-block mb-1"><%=s.getEmail()%></small>
+						<small class="text-muted d-block">university: <%=s.getUniversity()%></small>
+						<small class="text-muted d-block mb-2">faculty: <%=s.getFaculty()%></small>
+						
 
 						<div class="d-flex gap-2">
 							<a href="students?action=edit&id=<%=s.getId()%>" 

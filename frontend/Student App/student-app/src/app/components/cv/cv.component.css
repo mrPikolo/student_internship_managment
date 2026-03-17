@@ -3,3 +3,40 @@
 .border { border-color: #e9ecef !important; }
 .display-6 { font-size: 1.5rem; }
 
+.cv-action-btn {
+	height: 38px;
+	padding-top: 0.35rem;
+	padding-bottom: 0.35rem;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* Make header action buttons stack and stretch on small screens */
+.cv-action-group .cv-action-btn {
+	width: 100%;
+}
+
+@media (min-width: 768px) {
+	.cv-action-group {
+		width: auto;
+		flex-direction: row !important;
+		justify-content: flex-end;
+		margin-left: auto;
+	}
+	.cv-action-group .cv-action-btn {
+		width: auto;
+	}
+}
+
+/* Footer save button responsive behavior */
+.cv-save-footer .cv-action-btn {
+	width: 100%;
+}
+
+@media (min-width: 768px) {
+	.cv-save-footer .cv-action-btn {
+		width: auto;
+	}
+}
+

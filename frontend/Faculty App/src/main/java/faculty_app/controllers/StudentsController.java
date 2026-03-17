@@ -229,8 +229,12 @@ public class StudentsController extends HttpServlet {
 						request.getParameter("lastName"),
 						request.getParameter("email"),
 						LocalDate.parse( request.getParameter("birthDate")),
-						request.getParameter("indexNumber"),
-						request.getParameter("username")
+						request.getParameter("university"),
+						request.getParameter("faculty"),
+						request.getParameter("yearOfStudy"),
+						request.getParameter("gpa"),
+						request.getParameter("username"),
+						request.getParameter("password")
 						));
 
 		HttpRequest apiRequest = HttpRequest
@@ -267,8 +271,12 @@ public class StudentsController extends HttpServlet {
 						request.getParameter("lastName"),
 						request.getParameter("email"),
 						LocalDate.parse( request.getParameter("birthDate")),
-						request.getParameter("indexNumber"),
-						request.getParameter("username")
+						request.getParameter("university"),
+						request.getParameter("faculty"),
+						request.getParameter("yearOfStudy"),
+						request.getParameter("gpa"),
+						request.getParameter("username"),
+						request.getParameter("password")
 						));
 		HttpRequest apiRequest = HttpRequest
 				.newBuilder()

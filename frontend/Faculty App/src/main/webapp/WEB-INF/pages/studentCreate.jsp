@@ -49,13 +49,33 @@
 							</div>
 
 							<div class="mb-3">
-								<label class="form-label">Index number</label> 
-								<input type="text" name="indexNumber" class="form-control" required>
+								<label class="form-label">University</label> 
+								<input type="text" name="university" class="form-control" required>
+							</div>
+							
+							<div class="mb-3">
+								<label class="form-label">Faculty</label> 
+								<input type="text" name="faculty" class="form-control" required>
+							</div>
+							
+							<div class="mb-3">
+								<label class="form-label">Year Of Study</label> 
+								<input type="number"  min=1 max=6 name="yearOfStudy" class="form-control" required>
+							</div>
+							
+							<div class="mb-3">
+								<label class="form-label">GPA</label> 
+								<input type="number" step="0.1" name="gpa" class="form-control" required>
 							</div>
 
 							<div class="mb-3">
 								<label class="form-label">Username</label> 
 								<input type="text" name="username" class="form-control" required>
+							</div>
+							
+							<div class="mb-3">
+								<label class="form-label">Password</label> 
+								<input type="text" name="password" class="form-control" required>
 							</div>
 
 							<div class="d-grid gap-2 mt-4">

@@ -9,7 +9,10 @@ public class Student {
 	private String lastName;
 	private String email;
 	private LocalDate birthDate;
-	private String indexNumber;
+	private String university;
+	private String faculty;
+	private int yearOfStudy;
+	private double gpa;
 	
 	private String username;
 	private boolean active;
@@ -57,15 +60,6 @@ public class Student {
 	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
 	}
-
-	public String getIndexNumber() {
-		return indexNumber;
-	}
-
-	public void setIndexNumber(String indexNumber) {
-		this.indexNumber = indexNumber;
-	}
-
 	public String getUsername() {
 		return username;
 	}
@@ -82,11 +76,38 @@ public class Student {
 		this.active = active;
 	}
 
-	@Override
-	public String toString() {
-		return "Student [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", birthDate=" + birthDate + ", indexNumber=" + indexNumber + ", username=" + username + ", active="
-				+ active + "]";
+	public String getUniversity() {
+		return university;
 	}
+
+	public void setUniversity(String university) {
+		this.university = university;
+	}
+
+	public String getFaculty() {
+		return faculty;
+	}
+
+	public void setFaculty(String faculty) {
+		this.faculty = faculty;
+	}
+
+	public int getYearOfStudy() {
+		return yearOfStudy;
+	}
+
+	public void setYearOfStudy(int yearOfStudy) {
+		this.yearOfStudy = yearOfStudy;
+	}
+
+	public double getGpa() {
+		return gpa;
+	}
+
+	public void setGpa(double gpa) {
+		this.gpa = gpa;
+	}
+	
+	
 
 }

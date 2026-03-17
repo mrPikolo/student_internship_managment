@@ -39,5 +39,7 @@ public class CV {
 	private List<CvInterest> interests;
 	
 	private String imagePath;
+	private String student_phone;
+	private String student_address;
 
 }

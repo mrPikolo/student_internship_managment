@@ -1,14 +1,15 @@
-<p>cv works!</p>
-
 <div class="container py-4">
-	<div class="d-flex justify-content-between align-items-center mb-3">
-		<div>
+	<div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-3">
+		<div class="mb-2 mb-md-0">
 			<h4 class="mb-0">Europass CV Editor</h4>
 			<small class="text-muted">Fill in your CV details</small>
 		</div>
-		<div>
-			<button class="btn btn-outline-secondary me-2" (click)="loadCV()">Reload</button>
-			<button class="btn btn-primary" (click)="onSubmit()" [disabled]="saving">{{ saving ? 'Saving...' : 'Save CV' }}</button>
+		<div class="cv-action-group d-flex flex-column flex-md-row align-items-center gap-2 w-100">
+
+			<button class="btn btn-outline-danger cv-action-btn d-flex align-items-center justify-content-center" type="button" (click)="navigateToDashboard()" aria-label="Back" title="Back">
+				<i class="bi bi-arrow-left"></i>
+			</button>
+			<button class="btn btn-outline-secondary cv-action-btn" type="button" (click)="loadCV()">Reload</button>
 		</div>
 	</div>
 
@@ -44,7 +45,7 @@
 					</div>
 					<div class="col-md-8">
 						<label class="form-label">Photo</label>
-						<input type="file" class="form-control" (change)="onFileSelected($event)" />
+						<input type="file" accept=".jpg,.jpeg,.png" class="form-control" (change)="onFileSelected($event)" />
 						<div *ngIf="imagePreview" class="mt-2">
 							<img [src]="imagePreview" alt="Preview" class="img-thumbnail" style="max-width:150px;" />
 						</div>
@@ -181,4 +182,11 @@
 			</div>
 		</div>
 	</form>
+
+	<!-- Footer save button placed at bottom of the form -->
+	<div class="cv-save-footer mt-3">
+		<div class="d-flex justify-content-end">
+			<button class="btn btn-primary cv-action-btn" type="button" (click)="onSubmit()" [disabled]="saving">{{ saving ? 'Saving...' : 'Save CV' }}</button>
+		</div>
+	</div>
 </div>

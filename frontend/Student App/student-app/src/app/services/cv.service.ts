@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { AuthService } from './auth.service';
+import { Student } from '../models/student.model';
 import { PersonalInfo } from '../models/personal-info.model';
 import { Education } from '../models/education.model';
 import { WorkExperience } from '../models/work-experience.model';
@@ -12,84 +15,63 @@ import { CV } from '../models/cv.model';
 export class CvService {
   private readonly API_URL = '/api/cv';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
-  getCV(): Observable<CV | null> {
-    // Mock CV data
-    const mockCV: CV = {
-      id: 1,
-      personalInfo: {
-        firstName: 'Ana',
-        lastName: 'Anić',
-        email: 'ana.anic@university.edu',
-        phone: '+387 61 123 456',
-        address: 'Sarajevo, BiH',
-        dateOfBirth: new Date('2000-05-15')
-      },
-      education: [
-        {
-          institution: 'Univerzitet u Sarajevu',
-          degree: 'Bachelor',
-          fieldOfStudy: 'Computer Science and Informatics',
-          startDate: new Date('2018-10-01'),
-          endDate: new Date('2022-06-30'),
-          grade: '9.2'
-        }
-      ],
-      workExperience: [
-        {
-          company: 'Tech Startup',
-          position: 'Junior Developer',
-          startDate: new Date('2022-07-01'),
-          endDate: new Date('2023-12-31'),
-          description: 'Web application development using Angular and Node.js',
-          technologies: ['Angular', 'Node.js', 'MongoDB']
-        }
-      ],
-      skills: [
-        { name: 'JavaScript', level: 'Advanced' },
-        { name: 'TypeScript', level: 'Intermediate' },
-        { name: 'Angular', level: 'Intermediate' },
-        { name: 'HTML/CSS', level: 'Advanced' }
-      ],
-      interests: ['Web Development', 'Machine Learning', 'Open Source'],
-      languages: [
-        { name: 'Bosnian', level: 'Native' },
-        { name: 'English', level: 'C1' },
-        { name: 'German', level: 'B2' }
-      ],
-      internships: [
-        {
-          id: 1,
-          company: 'Tech Startup',
-          position: 'Intern',
-          startDate: new Date('2021-06-01'),
-          endDate: new Date('2021-08-31'),
-          description: 'Summer internship working on frontend features'
-        }
-      ],
-      imagePath: '/uploads/profile-ana.jpg',
-      studentId: 1
-    };
+  getCV(): Observable<CV> {
+    const user = this.authService.getCurrentUser();
+    const userId = user?.id;
 
-    return of(mockCV);
+    if (!userId) {
+      return throwError(() => new Error('No logged-in user id available'));
+    }
+
+    const url = `http://localhost:8085${this.API_URL.replace('/cv', '/students')}/${userId}/user`;
+    return this.http.get<Student>(url).pipe(
+      map((student) => {
+        const cv: CV = {
+          personalInfo: {
+            firstName: student.firstName,
+            lastName: student.lastName,
+            email: student.email,
+            phone: '',
+            address: '',
+            dateOfBirth: new Date()
+          },
+          education: [
+            {
+              institution: student.university,
+              degree: '',
+              fieldOfStudy: student.faculty,
+              startDate: new Date(),
+              endDate: undefined,
+              grade: student.gpa !== undefined && student.gpa !== null ? String(student.gpa) : undefined
+            }
+          ],
+          workExperience: [],
+          skills: [],
+          interests: [],
+          languages: [],
+          internships: [],
+          imagePath: undefined,
+          studentId: student.id
+        };
+        return cv;
+      })
+    );
   }
 
   saveCV(cv: CV): Observable<CV> {
-    // Mock save
     cv.id = cv.id || Date.now();
     cv.updatedAt = new Date();
     return of(cv);
   }
 
   updateCV(cv: CV): Observable<CV> {
-    // Mock update
     cv.updatedAt = new Date();
     return of(cv);
   }
 
   deleteCV(): Observable<void> {
-    // Mock delete
     return of(void 0);
   }
 }
