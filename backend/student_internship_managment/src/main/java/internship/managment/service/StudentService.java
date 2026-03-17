@@ -32,7 +32,7 @@ public class StudentService {
 		
 		User user = new User();
 		user.setUsername(dto.getUsername());
-		user.setPassword("student");
+		user.setPassword(dto.getPassword());
 		user.setRole(Role.STUDENT);
 		user.setActive(true);
 		
@@ -43,6 +43,10 @@ public class StudentService {
 		student.setLastName(dto.getLastName());
 		student.setEmail(dto.getEmail());
 		student.setBirthDate(dto.getBirthDate());
+		student.setUniversity(dto.getUniversity());
+		student.setFaculty(dto.getFaculty());
+		student.setYearOfStudy(dto.getYearOfStudy());
+		student.setGpa(dto.getGpa());
 		student.setUser(user);
 		
 		Student saved = studentRepository.save(student);
@@ -75,7 +79,11 @@ public class StudentService {
 			s.setLastName(csDTO.getLastName());
 			s.setEmail(csDTO.getEmail());
 			s.setBirthDate(csDTO.getBirthDate());
+			s.setUniversity(csDTO.getUniversity());
+			s.setFaculty(csDTO.getFaculty());
+			s.setGpa(csDTO.getGpa());
 			s.getUser().setUsername(csDTO.getUsername());
+			s.getUser().setPassword(csDTO.getPassword());
 			
 			studentRepository.save(s);
 			studentDTO = mapper.toDTO(s);

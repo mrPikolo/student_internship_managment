@@ -8,20 +8,18 @@ public class StudentDTO {
 	private String firstName;
 	private String lastName;
 	private String email;
-
+	private LocalDate birthDate;
 	private String university;
 	private String faculty;
 	private int yearOfStudy;
 	private double gpa;
-	
+
 	private String username;
 	private boolean active;
 
 	public StudentDTO() {
 		super();
 	}
-
-	
 
 	public StudentDTO(Long id, String firstName, String lastName, String email, String university, String faculty,
 			int yearOfStudy, double gpa, String username, boolean active) {
@@ -70,6 +68,14 @@ public class StudentDTO {
 		this.email = email;
 	}
 
+	public LocalDate getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(LocalDate birthDate) {
+		this.birthDate = birthDate;
+	}
+
 	public String getUsername() {
 		return username;
 	}
@@ -86,49 +92,33 @@ public class StudentDTO {
 		this.active = active;
 	}
 
-
-
 	public String getUniversity() {
 		return university;
 	}
-
-
 
 	public void setUniversity(String university) {
 		this.university = university;
 	}
 
-
-
 	public String getFaculty() {
 		return faculty;
 	}
-
-
 
 	public void setFaculty(String faculty) {
 		this.faculty = faculty;
 	}
 
-
-
 	public int getYearOfStudy() {
 		return yearOfStudy;
 	}
-
-
 
 	public void setYearOfStudy(int yearOfStudy) {
 		this.yearOfStudy = yearOfStudy;
 	}
 
-
-
 	public double getGpa() {
 		return gpa;
 	}
-
-
 
 	public void setGpa(double gpa) {
 		this.gpa = gpa;

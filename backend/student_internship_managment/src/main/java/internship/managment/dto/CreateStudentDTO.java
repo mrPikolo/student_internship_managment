@@ -8,23 +8,16 @@ public class CreateStudentDTO {
 	private String lastName;
 	private String email;
 	private LocalDate birthDate;
-	private String indexNumber;
+	private String university;
+	private String faculty;
+	private int yearOfStudy;
+	private double gpa;
 	
 	private String username;
+	private String password;
 
 	public CreateStudentDTO() {
 		super();
-	}
-
-	public CreateStudentDTO(String firstName, String lastName, String email, LocalDate birthDate, String indexNumber,
-			String username) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.birthDate = birthDate;
-		this.indexNumber = indexNumber;
-		this.username = username;
 	}
 
 	public String getFirstName() {
@@ -59,20 +52,52 @@ public class CreateStudentDTO {
 		this.birthDate = birthDate;
 	}
 
-	public String getIndexNumber() {
-		return indexNumber;
-	}
-
-	public void setIndexNumber(String indexNumber) {
-		this.indexNumber = indexNumber;
-	}
-
 	public String getUsername() {
 		return username;
 	}
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getUniversity() {
+		return university;
+	}
+
+	public void setUniversity(String university) {
+		this.university = university;
+	}
+
+	public String getFaculty() {
+		return faculty;
+	}
+
+	public void setFaculty(String faculty) {
+		this.faculty = faculty;
+	}
+
+	public int getYearOfStudy() {
+		return yearOfStudy;
+	}
+
+	public void setYearOfStudy(int yearOfStudy) {
+		this.yearOfStudy = yearOfStudy;
+	}
+
+	public double getGpa() {
+		return gpa;
+	}
+
+	public void setGpa(double gpa) {
+		this.gpa = gpa;
 	}
 	
 	

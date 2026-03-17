@@ -82,9 +82,9 @@ public class StudentController {
                 dto.setFirstName(data[0]);
                 dto.setLastName(data[1]);
                 dto.setEmail(data[2]);
-                dto.setIndexNumber(data[3]);
-                dto.setBirthDate(LocalDate.parse(data[4]));
-                dto.setUsername(data[5]);
+                dto.setBirthDate(LocalDate.parse(data[3]));
+                dto.setUsername(data[4]);
+                dto.setPassword(data[5]);
                 
                 studentService.create(dto);
             }
