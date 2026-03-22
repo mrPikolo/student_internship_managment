@@ -22,8 +22,9 @@ export class CvComponent implements OnInit {
   loading = false;
   saving = false;
   imagePreview: string | null = null;
+  selectedFile: File | null = null;
 
-  skillLevels = ['Beginner', 'Intermediate', 'Advanced', 'Expert'];
+  skillLevels = ['BEGINNER', 'INTERMEDIATE', 'ADVANCED', 'EXPERT'];
   languageLevels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
 
   constructor(
@@ -48,7 +49,7 @@ export class CvComponent implements OnInit {
         address: ['', Validators.required],
         dateOfBirth: ['', Validators.required]
       }),
-      education: this.fb.array([]),
+      educations: this.fb.array([]),
       workExperience: this.fb.array([]),
       internships: this.fb.array([]),
       skills: this.fb.array([]),
@@ -82,9 +83,9 @@ export class CvComponent implements OnInit {
     });
 
     // Education
-    const educationArray = this.cvForm.get('education') as FormArray;
-    cv.education.forEach(edu => {
-      educationArray.push(this.createEducationGroup(edu));
+    const educationsArray = this.cvForm.get('educations') as FormArray;
+    cv.educations.forEach(edu => {
+      educationsArray.push(this.createEducationGroup(edu));
     });
 
     // Work experience
@@ -135,7 +136,7 @@ export class CvComponent implements OnInit {
     return this.fb.group({
       institution: [edu?.institution || '', Validators.required],
       degree: [edu?.degree || '', Validators.required],
-      fieldOfStudy: [edu?.fieldOfStudy || '', Validators.required],
+      description: [edu?.description || '', Validators.required],
       startDate: [edu?.startDate || '', Validators.required],
       endDate: [edu?.endDate || ''],
       grade: [edu?.grade || '']
@@ -166,20 +167,20 @@ export class CvComponent implements OnInit {
   createSkillGroup(skill?: Skill): FormGroup {
     return this.fb.group({
       name: [skill?.name || '', Validators.required],
-      level: [skill?.level || 'Beginner', Validators.required]
+      level: [skill?.level || 'BEGINNER', Validators.required]
     });
   }
 
   createLanguageGroup(lang?: any): FormGroup {
     return this.fb.group({
       name: [lang?.name || '', Validators.required],
-      level: [lang?.level || 'B1', Validators.required]
+      level: [lang?.level || 'A1', Validators.required]
     });
   }
 
   // Getters for FormArrays
-  get educationArray(): FormArray {
-    return this.cvForm.get('education') as FormArray;
+  get educationsArray(): FormArray {
+    return this.cvForm.get('educations') as FormArray;
   }
 
   get workExperienceArray(): FormArray {
@@ -204,7 +205,7 @@ export class CvComponent implements OnInit {
 
   // Add methods
   addEducation(): void {
-    this.educationArray.push(this.createEducationGroup());
+    this.educationsArray.push(this.createEducationGroup());
   }
 
   addWorkExperience(): void {
@@ -229,7 +230,7 @@ export class CvComponent implements OnInit {
 
   // Remove methods
   removeEducation(index: number): void {
-    this.educationArray.removeAt(index);
+    this.educationsArray.removeAt(index);
   }
 
   removeWorkExperience(index: number): void {
@@ -244,6 +245,7 @@ export class CvComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
       const file = input.files[0];
+      this.selectedFile = file;
       const reader = new FileReader();
       reader.onload = () => {
         this.imagePreview = reader.result as string;
@@ -268,7 +270,7 @@ export class CvComponent implements OnInit {
   removeLanguage(index: number): void {
     this.languagesArray.removeAt(index);
   }
-
+/*
   onSubmit(): void {
     if (this.cvForm.valid) {
       this.saving = true;
@@ -297,7 +299,8 @@ export class CvComponent implements OnInit {
         studentId: formValue.studentId || (this.cv as any)?.studentId
       };
 
-      const saveObservable = this.cv ? this.cvService.updateCV(cv) : this.cvService.saveCV(cv);
+//      const saveObservable = this.cv ? this.cvService.updateCV(cv, this.selectedFile) : this.cvService.saveCV(cv, this.selectedFile);
+      const saveObservable = this.cv  ? this.cvService.updateCV(cv, this.selectedFile ?? undefined)  : this.cvService.saveCV(cv, this.selectedFile ?? undefined);
 
       saveObservable.subscribe({
         next: (savedCv) => {
@@ -305,7 +308,8 @@ export class CvComponent implements OnInit {
           this.saving = false;
           alert('CV saved successfully!');
         },
-        error: () => {
+        error: (err) => {
+          console.log(err);
           this.saving = false;
           alert('Error saving CV!');
         }
@@ -314,4 +318,72 @@ export class CvComponent implements OnInit {
       alert('Please fill in all required fields!');
     }
   }
+    */
+
+  onSubmit(): void {
+  if (this.cvForm.valid) {
+    this.saving = true;
+
+    const formValue = this.cvForm.value;
+
+    const cv: CV = {
+      ...this.cv,
+      ...formValue,
+
+      // 🔥 OVO JE KLJUČ
+      address: formValue.personalInfo.address,
+      phone: formValue.personalInfo.phone,
+
+      educations: formValue.educations.map((edu: any) => ({
+        ...edu,
+        startDate: new Date(edu.startDate),
+        endDate: edu.endDate ? new Date(edu.endDate) : undefined
+      })),
+
+      workExperience: formValue.workExperience.map((work: any) => ({
+        ...work,
+        startDate: new Date(work.startDate),
+        endDate: work.endDate ? new Date(work.endDate) : undefined,
+        technologies: work.technologies
+          ? work.technologies.split(',').map((t: string) => t.trim())
+          : []
+      })),
+
+      internships: formValue.internships
+        ? formValue.internships.map((it: any) => ({
+            ...it,
+            startDate: it.startDate ? new Date(it.startDate) : undefined,
+            endDate: it.endDate ? new Date(it.endDate) : undefined
+          }))
+        : [],
+
+      imagePath: formValue.imagePath || this.imagePreview || undefined,
+      studentId: formValue.studentId || (this.cv as any)?.studentId
+    };
+
+    console.log("FINAL CV:", cv); // 🔍 DEBUG
+
+    const saveObservable = this.cv
+      ? this.cvService.updateCV(cv, this.selectedFile ?? undefined)
+      : this.cvService.saveCV(cv, this.selectedFile ?? undefined);
+
+    saveObservable.subscribe({
+      next: (savedCv) => {
+        this.cv = savedCv;
+        this.saving = false;
+        alert('CV saved successfully!');
+      },
+      error: (err) => {
+        console.log(err);
+        this.saving = false;
+        alert('Error saving CV!');
+      }
+    });
+  } else {
+    alert('Please fill in all required fields!');
+  }
+
+  console.log("FORM VALUE:", this.cvForm.value);
+console.log("EDUCATION ARRAY:", this.educationsArray.value);
+}
 }

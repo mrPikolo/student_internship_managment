@@ -5,6 +5,7 @@ import java.util.List;
 import internship.managment.model.cv.CvEducation;
 import internship.managment.model.cv.CvInterest;
 import internship.managment.model.cv.CvInternship;
+import internship.managment.model.cv.CvLanguage;
 import internship.managment.model.cv.CvSkill;
 import internship.managment.model.cv.CvWorkExperience;
 
@@ -21,6 +22,7 @@ public class CvDTO {
 	private List<CvWorkExperience> experiences;
 	private List<CvInternship> internships;
 	private List<CvSkill> skills;
+	private List<CvLanguage> languages;
 	private List<CvInterest> interests;
 	
 	public Long getStudentId() {
@@ -77,12 +79,19 @@ public class CvDTO {
 	public void setInterests(List<CvInterest> interests) {
 		this.interests = interests;
 	}
+	public List<CvLanguage> getLanguages() {
+		return languages;
+	}
+	public void setLanguages(List<CvLanguage> languages) {
+		this.languages = languages;
+	}
 	@Override
 	public String toString() {
 		return "CvDTO [studentId=" + studentId + ", phone=" + phone + ", address=" + address + ", imagePath="
 				+ imagePath + ", educations=" + educations + ", experiences=" + experiences + ", internships="
-				+ internships + ", skills=" + skills + ", interests=" + interests + "]";
+				+ internships + ", skills=" + skills + ", languages=" + languages + ", interests=" + interests + "]";
 	}
+	
 	
 	
 

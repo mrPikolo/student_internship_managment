@@ -1,1 +1,42 @@
-<p>internship-detail works!</p>
+@if (internship) {
+
+  <div class="container mt-4">
+
+    <h2>{{ internship.title }}</h2>
+
+    <p><strong>Company:</strong> {{ internship.companyName }}</p>
+    <p><strong>Start Date:</strong> {{ internship.startDate }}</p>
+    <p><strong>End Date:</strong> {{ internship.endDate }}</p>
+    <p><strong>Max Students:</strong> {{ internship.maxStudents }}</p>
+    <p><strong>Minimum Year:</strong> {{ internship.minYear }}</p>
+
+    <p><strong>Technologies:</strong></p>
+    @for (t of parseTechnologies(internship.technologies); track t) {
+      <span class="badge bg-success me-1">
+        {{ t }}
+      </span>
+    }
+
+    <hr>
+
+    <p>{{ internship.description }}</p>
+
+    <button class="btn btn-primary mt-3"
+            (click)="apply()">
+      Apply
+    </button>
+
+    <button class="btn btn-secondary mt-3 ms-2"
+        (click)="goBack()">
+  Cancel
+</button>
+
+  </div>
+
+} @else {
+
+  <div class="container mt-4 text-center">
+    <p>Loading internship details...</p>
+  </div>
+
+}

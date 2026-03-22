@@ -32,14 +32,15 @@ export class StudentService {
       email: 'ana.anic@university.edu',
       firstName: 'Ana',
       lastName: 'Anić',
+      birthDate: new Date('2000-01-01'),
       university: 'Univerzitet u Sarajevu',
       faculty: 'Elektrotehnički fakultet',
       yearOfStudy: 4,
       gpa: 9.2,
-      skills: ['JavaScript', 'TypeScript', 'Angular', 'HTML', 'CSS', 'Node.js'],
-      interests: ['Web Development', 'Machine Learning', 'Mobile Apps'],
-      createdAt: new Date('2023-10-01'),
-      updatedAt: new Date(),
+      //skills: ['JavaScript', 'TypeScript', 'Angular', 'HTML', 'CSS', 'Node.js'],
+      //interests: ['Web Development', 'Machine Learning', 'Mobile Apps'],
+      //createdAt: new Date('2023-10-01'),
+      //updatedAt: new Date(),
       ...student
     };
 

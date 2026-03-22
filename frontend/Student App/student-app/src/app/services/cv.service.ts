@@ -35,17 +35,17 @@ export class CvService {
             email: student.email,
             phone: '',
             address: '',
-            dateOfBirth: new Date()
+            dateOfBirth: student.birthDate
           },
-          education: [
-            {
-              institution: student.university,
-              degree: '',
-              fieldOfStudy: student.faculty,
-              startDate: new Date(),
-              endDate: undefined,
-              grade: student.gpa !== undefined && student.gpa !== null ? String(student.gpa) : undefined
-            }
+          educations: [
+              {
+                institution: student.university,
+                degree: '',
+                description: student.faculty,
+                startDate: new Date(),
+                endDate: undefined,
+                grade: student.gpa !== undefined && student.gpa !== null ? String(student.gpa) : undefined
+              }
           ],
           workExperience: [],
           skills: [],
@@ -60,15 +60,35 @@ export class CvService {
     );
   }
 
-  saveCV(cv: CV): Observable<CV> {
-    cv.id = cv.id || Date.now();
-    cv.updatedAt = new Date();
-    return of(cv);
+  saveCV(cv: CV, photo?: File): Observable<CV> {
+    const url = `http://localhost:8085/api/cv`;
+    const form = new FormData();
+    form.append('cv', new Blob([JSON.stringify(cv)], { type: 'application/json' }), 'cv.json');
+    if (photo) {
+      form.append('photo', photo, photo.name);
+    }
+    // DEBUG
+    console.log("saveCV:");
+    form.forEach((value, key) => {
+      console.log(key, value);
+    });
+    return this.http.post<CV>(url, form);
   }
 
-  updateCV(cv: CV): Observable<CV> {
-    cv.updatedAt = new Date();
-    return of(cv);
+  updateCV(cv: CV, photo?: File): Observable<CV> {
+    // Backend accepts multipart POST for CV save/update
+    const url = `http://localhost:8085/api/cv`;
+    const form = new FormData();
+    form.append('cv', new Blob([JSON.stringify(cv)], { type: 'application/json' }), 'cv.json');
+    if (photo) {
+      form.append('photo', photo, photo.name);
+    } // DEBUG
+    console.log("updateCV:");
+    form.forEach((value, key) => {
+      console.log(key, value);
+    });
+
+    return this.http.post<CV>(url, form);
   }
 
   deleteCV(): Observable<void> {

@@ -2,6 +2,8 @@ package internship.managment.model.cv;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,6 +20,7 @@ public class CvWorkExperience {
 	
 	@ManyToOne
     @JoinColumn(name = "cv_id")
+	@JsonIgnore
     private CV cv;
 
 	private String company;

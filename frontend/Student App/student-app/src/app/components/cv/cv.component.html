@@ -7,7 +7,7 @@
 		<div class="cv-action-group d-flex flex-column flex-md-row align-items-center gap-2 w-100">
 
 			<button class="btn btn-outline-danger cv-action-btn d-flex align-items-center justify-content-center" type="button" (click)="navigateToDashboard()" aria-label="Back" title="Back">
-				<i class="bi bi-arrow-left"></i>
+				<i class="bi bi-arrow-left"></i> Back
 			</button>
 			<button class="btn btn-outline-secondary cv-action-btn" type="button" (click)="loadCV()">Reload</button>
 		</div>
@@ -61,12 +61,12 @@
 					<h5 class="card-title mb-0">Education</h5>
 					<button class="btn btn-sm btn-outline-primary" type="button" (click)="addEducation()">Add education</button>
 				</div>
-				<div formArrayName="education">
-					<div *ngFor="let edu of educationArray.controls; let i = index" [formGroupName]="i" class="border rounded p-3 mb-2">
+				<div formArrayName="educations">
+					<div *ngFor="let edu of educationsArray.controls; let i = index" [formGroupName]="i" class="border rounded p-3 mb-2">
 						<div class="row g-2">
 							<div class="col-md-6"><input class="form-control" formControlName="institution" placeholder="Institution" /></div>
 							<div class="col-md-6"><input class="form-control" formControlName="degree" placeholder="Degree" /></div>
-							<div class="col-md-6"><input class="form-control" formControlName="fieldOfStudy" placeholder="Field of study" /></div>
+							<div class="col-md-6"><input class="form-control" formControlName="description" placeholder="Description" /></div>
 							<div class="col-md-3"><input type="date" class="form-control" formControlName="startDate" /></div>
 							<div class="col-md-3"><input type="date" class="form-control" formControlName="endDate" /></div>
 							<div class="col-12 mt-2 d-flex justify-content-end">

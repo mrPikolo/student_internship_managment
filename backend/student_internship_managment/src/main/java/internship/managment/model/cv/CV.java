@@ -38,8 +38,77 @@ public class CV {
 	@OneToMany(mappedBy = "cv")
 	private List<CvInterest> interests;
 	
+	@OneToMany(mappedBy = "cv")
+	private List<CvLanguage> languages;
+	
 	private String imagePath;
-	private String student_phone;
-	private String student_address;
-
+	private String studentPhone;
+	private String studentAddress;
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public Student getStudent() {
+		return student;
+	}
+	public void setStudent(Student student) {
+		this.student = student;
+	}
+	public List<CvEducation> getEducations() {
+		return educations;
+	}
+	public void setEducations(List<CvEducation> educations) {
+		this.educations = educations;
+	}
+	public List<CvWorkExperience> getExperiences() {
+		return experiences;
+	}
+	public void setExperiences(List<CvWorkExperience> experiences) {
+		this.experiences = experiences;
+	}
+	public List<CvInternship> getInternships() {
+		return internships;
+	}
+	public void setInternships(List<CvInternship> internships) {
+		this.internships = internships;
+	}
+	public List<CvSkill> getSkills() {
+		return skills;
+	}
+	public void setSkills(List<CvSkill> skills) {
+		this.skills = skills;
+	}
+	public List<CvInterest> getInterests() {
+		return interests;
+	}
+	public void setInterests(List<CvInterest> interests) {
+		this.interests = interests;
+	}
+	public String getImagePath() {
+		return imagePath;
+	}
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+	public String getStudentPhone() {
+		return studentPhone;
+	}
+	public void setStudentPhone(String studentPhone) {
+		this.studentPhone = studentPhone;
+	}
+	public String getStudentAddress() {
+		return studentAddress;
+	}
+	public void setStudentAddress(String studentAddress) {
+		this.studentAddress = studentAddress;
+	}
+	public List<CvLanguage> getLanguages() {
+		return languages;
+	}
+	public void setLanguages(List<CvLanguage> languages) {
+		this.languages = languages;
+	}
 }

@@ -6,7 +6,7 @@ import { Skill } from './skill.model';
 export interface CV {
   id?: number;
   personalInfo: PersonalInfo;
-  education: Education[];
+  educations: Education[];
   workExperience: WorkExperience[];
   skills: Skill[];
   interests: string[];

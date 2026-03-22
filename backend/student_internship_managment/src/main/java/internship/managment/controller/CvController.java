@@ -31,6 +31,8 @@ public class CvController {
 	@Autowired
 	CvService cvService;
 	
+	
+	
 	@PostMapping("/photo")
 	public ResponseEntity<String> uploadPhoto(@RequestParam("file") MultipartFile file) throws IOException {
 
@@ -50,34 +52,11 @@ public class CvController {
 	@PostMapping(consumes = "multipart/form-data")
 	public ResponseEntity<?> saveCv( @RequestPart("cv") CvDTO cv,
 	        @RequestPart(value = "photo", required = false) MultipartFile photo) {
+		
+		CvDTO response = cvService.saveCv(cv, photo);
+	    return ResponseEntity.ok(response);
 
 
-	    if(photo != null){
-	        System.out.println(photo.getOriginalFilename());
-	        
-	        String originalName = photo.getOriginalFilename();
-
-	        String extension = originalName.substring(originalName.lastIndexOf("."));
-
-	        String fileName = UUID.randomUUID().toString() + extension;
-
-	        Path path = Paths.get(photoManager.getPhotoDir() + fileName);
-
-	        boolean error = false;
-	        try {
-				Files.write(path, photo.getBytes());
-			} catch (IOException e) {
-				error = true;
-				e.printStackTrace();
-			}
-	        
-	        if( !error) {
-	        	cv.setImagePath(fileName);
-	        	boolean cretedCv = cvService.create(cv);
-	        }
-	    }
-
-	    return ResponseEntity.ok("CV saved");
 	}
 
 }

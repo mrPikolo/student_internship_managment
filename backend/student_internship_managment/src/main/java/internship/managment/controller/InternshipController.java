@@ -22,7 +22,7 @@ import internship.managment.service.InternshipService;
 
 @RestController
 @RequestMapping("/api/internships")
-@CrossOrigin(origins = "http://localhost:8085")
+@CrossOrigin(origins = "http://localhost:4200")
 public class InternshipController {
 
 	@Autowired
